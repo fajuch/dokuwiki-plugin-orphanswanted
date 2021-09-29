@@ -114,7 +114,8 @@ class helper_plugin_orphanswanted extends DokuWiki_Plugin {
                   '@<HTML>.*?</HTML>@su',
                   '@^( {2,}|\t)[^\*\- ].*?$@mu',
                   '@<code[^>]*?>.*?<\/code>@su',
-                  '@<file[^>]*?>.*?<\/file>@su'
+                  '@<file[^>]*?>.*?<\/file>@su',
+                  '@\[\[ *https?:.*\]\]@iu'
         )
         as $ignored )
         {
