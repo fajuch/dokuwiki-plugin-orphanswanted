@@ -90,8 +90,8 @@ class helper_plugin_orphanswanted extends DokuWiki_Plugin {
     function orph_Check_InternalLinks( &$data, $base, $file, $type, $lvl, $opts ) {
         global $conf;
 
-        if (!defined('LINK_PATTERN')) define('LINK_PATTERN', '%\[\[([^\]|#]*)(#[^\]|]*)?\|?([^\]]*)]]%');
-
+        if (!defined('LINK_PATTERN')) define('LINK_PATTERN', '%(\[\[([^\]|#]*)(#[^\]|]*)?\|?([^\]]*)]]|\{\{page\>([^\}|\&]*)(\&[^\}|]*)?\|?([^\}]*)\}\})%');
+        
         if(!preg_match("/.*\.txt$/", $file)) {
             return;
         }
@@ -124,7 +124,7 @@ class helper_plugin_orphanswanted extends DokuWiki_Plugin {
         $links = array();
         preg_match_all( LINK_PATTERN, $body, $links );
 
-        foreach($links[1] as $link) {
+        foreach(array_merge($links[2],$links[5]) as $link) {
             if($conf['allowdebug']) echo sprintf("--- Checking %s<br />\n", $link);
 
             if( (0 < strlen(ltrim($link)))
